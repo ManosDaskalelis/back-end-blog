@@ -8,6 +8,9 @@ The project provides a robust API for managing blog posts user authentication, c
 # Technologies Used 
 
 Backend: ASP.NET Core,
+
 Database: Entity Framework Core and Sql Server,
+
 Authentication: JSON Web Tokens (JWT),
+
 API Documentation: Swagger
