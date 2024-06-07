@@ -24,6 +24,7 @@ namespace Blog_Backend
             });
 
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 
             builder.Services.AddCors(options => 
             options.AddPolicy("AllowAll",

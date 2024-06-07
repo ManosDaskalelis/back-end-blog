@@ -18,7 +18,7 @@ namespace Blog_Backend.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        [HttpPost]
+        [HttpPost("AddCategory")]
         public async Task<IActionResult> CreateCategory(CategoryAddDTO categoryAddDTO)
         {
             var category = new Category
@@ -26,7 +26,7 @@ namespace Blog_Backend.Controllers
                 Name = categoryAddDTO.Name,
                 UrlHandle = categoryAddDTO.UrlHandle,
             };
-            await _categoryRepository.AddAsync(category);
+           category =  await _categoryRepository.AddAsync(category);
 
             var response = new CategoryReadOnlyDTO
             {
@@ -39,7 +39,7 @@ namespace Blog_Backend.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("GetCategories")]
         public async Task<IActionResult> GetAllCategories()
         {
             var categories = await _categoryRepository.GetAllASync();
@@ -57,8 +57,7 @@ namespace Blog_Backend.Controllers
             return Ok(response);
         }
 
-        [HttpGet]
-        [Route("{id:Guid}")]
+        [HttpGet("GetCategoryById/{id:Guid}")]
         public async Task<IActionResult> GetCategoryById(Guid id)
         {
             var category = await _categoryRepository.GetCategoryByIdASync(id);
@@ -76,8 +75,7 @@ namespace Blog_Backend.Controllers
             return Ok(response);
         }
 
-        [HttpPut]
-        [Route("{id:Guid}")]
+        [HttpPut("UpdateCategory/{id:Guid}")]
         public async Task<IActionResult> UpdateCategory(Guid id, CategoryUpdateDTO updateDTO)
         {
             var category = new Category
@@ -105,8 +103,7 @@ namespace Blog_Backend.Controllers
             return Ok(response);
         }
 
-        [HttpDelete]
-        [Route("{id:Guid}")]
+        [HttpDelete("DeleteCategory/{id:Guid}")]
         public async Task<IActionResult> DeleteCategory(Guid id)
         {
             var category = await _categoryRepository.DeleteAsync(id);
