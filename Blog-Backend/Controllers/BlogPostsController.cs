@@ -11,10 +11,12 @@ namespace Blog_Backend.Controllers
     public class BlogPostsController : ControllerBase
     {
         private readonly IBlogPostRepository _blogPostRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public BlogPostsController(IBlogPostRepository blogPostRepository)
+        public BlogPostsController(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository)
         {
             _blogPostRepository = blogPostRepository;
+            _categoryRepository = categoryRepository;
         }
 
         [HttpPost("AddBlogPosts")]
@@ -30,7 +32,19 @@ namespace Blog_Backend.Controllers
                 Content = addDTO.Content,
                 Title = addDTO.Title,
                 UrlHandle = addDTO.UrlHandle,
+                Categories = new List<Category>()
             };
+
+            foreach (var category in addDTO.Categories)
+            {
+                var existingCategory = await _categoryRepository.GetCategoryByIdASync(category);
+
+                if (existingCategory is not null) 
+                {
+                    blogPost.Categories.Add(existingCategory);
+                }
+            }
+
             blogPost = await _blogPostRepository.AddAsync(blogPost);
 
             var response = new BlogPostReadOnlyDTO
@@ -44,6 +58,12 @@ namespace Blog_Backend.Controllers
                 Content = blogPost.Content,
                 Title = blogPost.Title,
                 UrlHandle = blogPost.UrlHandle,
+                Categories = blogPost.Categories.Select(x => new CategoryReadOnlyDTO
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UrlHandle = x.UrlHandle,
+                }).ToList()
             };
             return Ok(response);
         }

@@ -1,4 +1,6 @@
-﻿namespace Blog_Backend.DTO
+﻿using System.Security.Principal;
+
+namespace Blog_Backend.DTO
 {
     public class BlogPostReadOnlyDTO
     {
@@ -11,5 +13,7 @@
         public DateTime DateCreated { get; set; }
         public string? Author { get; set; }
         public bool IsVisible { get; set; }
+
+        public List<CategoryReadOnlyDTO> Categories { get; set; } = new List<CategoryReadOnlyDTO>();
     }
 }
