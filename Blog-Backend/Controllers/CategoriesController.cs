@@ -57,7 +57,7 @@ namespace Blog_Backend.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetCategoryById/{id:Guid}")]
+        [HttpGet("GetCategory/{id:Guid}")]
         public async Task<IActionResult> GetCategoryById(Guid id)
         {
             var category = await _categoryRepository.GetCategoryByIdASync(id);
