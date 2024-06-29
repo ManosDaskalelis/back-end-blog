@@ -2,6 +2,7 @@
 using Blog_Backend.DTO;
 using Blog_Backend.Models;
 using Blog_Backend.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,7 @@ namespace Blog_Backend.Controllers
         }
 
         [HttpPost("AddCategory")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateCategory(CategoryAddDTO categoryAddDTO)
         {
             var category = new Category
@@ -26,7 +28,7 @@ namespace Blog_Backend.Controllers
                 Name = categoryAddDTO.Name,
                 UrlHandle = categoryAddDTO.UrlHandle,
             };
-           category =  await _categoryRepository.AddAsync(category);
+            category = await _categoryRepository.AddAsync(category);
 
             var response = new CategoryReadOnlyDTO
             {
@@ -40,9 +42,13 @@ namespace Blog_Backend.Controllers
 
 
         [HttpGet("GetCategories")]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAllCategories(string? query,
+            string? sortBy,
+            string? sortDirection,
+            int? pageNumber,
+            int? pageSize)
         {
-            var categories = await _categoryRepository.GetAllASync();
+            var categories = await _categoryRepository.GetAllASync(query, sortBy, sortDirection, pageNumber, pageSize);
 
             var response = new List<CategoryReadOnlyDTO>();
             foreach (var category in categories)
@@ -76,6 +82,7 @@ namespace Blog_Backend.Controllers
         }
 
         [HttpPut("UpdateCategory/{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateCategory(Guid id, CategoryUpdateDTO updateDTO)
         {
             var category = new Category
@@ -104,6 +111,7 @@ namespace Blog_Backend.Controllers
         }
 
         [HttpDelete("DeleteCategory/{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteCategory(Guid id)
         {
             var category = await _categoryRepository.DeleteAsync(id);
@@ -120,6 +128,14 @@ namespace Blog_Backend.Controllers
                 UrlHandle = category.UrlHandle,
             };
             return Ok(response);
+        }
+
+        [HttpGet("GetCount")]
+        public async Task<IActionResult> GetCategoriesCount()
+        {
+            var count = await _categoryRepository.GetCountAsync();
+
+            return Ok(count);
         }
     }
 }

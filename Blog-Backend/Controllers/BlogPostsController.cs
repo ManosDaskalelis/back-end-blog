@@ -1,6 +1,7 @@
 ﻿using Blog_Backend.DTO;
 using Blog_Backend.Models;
 using Blog_Backend.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace Blog_Backend.Controllers
         }
 
         [HttpPost("AddBlogPosts")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateBlogPost(BlogPostAddDTO addDTO)
         {
             var blogpost = new BlogPost
@@ -39,7 +41,7 @@ namespace Blog_Backend.Controllers
             {
                 var existingCategory = await _categoryRepository.GetCategoryByIdASync(category);
 
-                if (existingCategory is not null) 
+                if (existingCategory is not null)
                 {
                     blogpost.Categories.Add(existingCategory);
                 }
@@ -130,7 +132,40 @@ namespace Blog_Backend.Controllers
             return Ok(response);
         }
 
+        [HttpGet("GetBlogPost/{urlHandle}")]
+        public async Task<IActionResult> GetBlogPostByUrl(string urlHandle)
+        {
+            var blogPost = await _blogPostRepository.GetBlogPostByUrlHandAsync(urlHandle);
+
+            if (blogPost is null)
+            {
+                return NotFound();
+            }
+
+            var response = new BlogPostReadOnlyDTO
+            {
+                Id = blogPost.Id,
+                Author = blogPost.Author,
+                FullContent = blogPost.FullContent,
+                ImageUrl = blogPost.ImageUrl,
+                IsVisible = blogPost.IsVisible,
+                DateCreated = blogPost.DateCreated,
+                Content = blogPost.Content,
+                Title = blogPost.Title,
+                UrlHandle = blogPost.UrlHandle,
+                Categories = blogPost.Categories.Select(x => new CategoryReadOnlyDTO
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UrlHandle = x.UrlHandle
+                }).ToList()
+            };
+
+            return Ok(response);
+        }
+
         [HttpPut("UpdateBlogPost/{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateBlogPostById(Guid id, BlogPostUpdateDTO updateDTO)
         {
             var blogpost = new BlogPost
@@ -149,15 +184,15 @@ namespace Blog_Backend.Controllers
 
             foreach (var category in updateDTO.Categories)
             {
-               var existingCategory = await _categoryRepository.GetCategoryByIdASync(category);
-               
-                if (existingCategory != null) 
+                var existingCategory = await _categoryRepository.GetCategoryByIdASync(category);
+
+                if (existingCategory != null)
                 {
                     blogpost.Categories.Add(existingCategory);
                 }
             }
 
-           var updatedBlogPost = await _blogPostRepository.UpdateBlogPostAsync(blogpost);
+            var updatedBlogPost = await _blogPostRepository.UpdateBlogPostAsync(blogpost);
 
             if (updatedBlogPost is null)
             {
@@ -182,11 +217,12 @@ namespace Blog_Backend.Controllers
                     UrlHandle = x.UrlHandle,
                 }).ToList()
             };
-            
+
             return Ok(response);
         }
 
         [HttpDelete("DeleteBlogPost/{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteBlogPost(Guid id)
         {
             var blogPost = await _blogPostRepository.DeleteAsync(id);
@@ -196,7 +232,8 @@ namespace Blog_Backend.Controllers
                 return NotFound();
             }
 
-            var response = new BlogPostReadOnlyDTO{
+            var response = new BlogPostReadOnlyDTO
+            {
                 Id = blogPost.Id,
                 Author = blogPost.Author,
                 FullContent = blogPost.FullContent,

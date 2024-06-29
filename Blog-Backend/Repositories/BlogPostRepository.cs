@@ -33,6 +33,11 @@ namespace Blog_Backend.Repositories
 
         }
 
+        public async Task<BlogPost?> GetBlogPostByUrlHandAsync(string urlHandle)
+        {
+            return await _dataContext.BlogPosts.Include(x => x.Categories).FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);
+        }
+
         public async Task<BlogPost?> UpdateBlogPostAsync(BlogPost blogPost)
         {
             var existingBlogPost = await _dataContext.BlogPosts.Include(x => x.Categories)
@@ -62,5 +67,6 @@ namespace Blog_Backend.Repositories
             return null;
 
         }
+
     }
 }
