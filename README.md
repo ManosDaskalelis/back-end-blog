@@ -14,3 +14,12 @@ Database: Entity Framework Core and Sql Server,
 Authentication: JSON Web Tokens (JWT),
 
 API Documentation: Swagger
+
+# Test Users
+admin { username: Admin@gmail.com
+        password: admin@123
+        }
+user { username: User@gmail.com
+        password: user@123
+        }        
+        
