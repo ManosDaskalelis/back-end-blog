@@ -65,6 +65,30 @@ namespace Blog_Backend.Data
                 }
             };
             builder.Entity<IdentityUserRole<string>>().HasData(adminRoles);
+
+            var userId = "667c747c-4e56-4e1b-af94-f498f24de516";
+            var user = new IdentityUser()
+            {
+                Id = userId,
+                UserName = "user@gmail.com",
+                Email = "user@gmail.com",
+                NormalizedEmail = "user@gmail.com".ToUpper(),
+                NormalizedUserName = "user@gmail.com".ToUpper()
+            };
+
+            user.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(user, "User@123");
+
+            builder.Entity<IdentityUser>().HasData(user);
+
+            var userRoles = new List<IdentityUserRole<string>>()
+            {
+                new()
+                {
+                    UserId = userId,
+                    RoleId = readerRoleId
+                }
+            };
+            builder.Entity<IdentityUserRole<string>>().HasData(userRoles);
         }
     }
 }

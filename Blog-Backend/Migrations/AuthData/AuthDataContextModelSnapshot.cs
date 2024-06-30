@@ -159,17 +159,33 @@ namespace Blog_Backend.Migrations.AuthData
                         {
                             Id = "3dd3fa83-5ea9-4fbf-b6a1-a312dfe22ba6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "62cc1973-bd49-46a6-9f8f-d291186b4464",
+                            ConcurrencyStamp = "c8fb8b29-0b25-4011-bb40-f9ec0dae4019",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAED5gtJmHbWY5OQNZUpIyIGtYIQcVc9JTLFUWE7N0YoHClvcDv7/HtllO6ydaMYdO6w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDCImlvRHwsoygzrLdb0ttpkOIEPbZkuMNAHTVFzQorUqF1wAE/VEOslM0IOZkkPlw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "65ce00bd-bd47-4f99-9ee9-76c3ac3a9401",
+                            SecurityStamp = "a5fe033a-165f-4da3-9a9b-d8f44274dc37",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "667c747c-4e56-4e1b-af94-f498f24de516",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d3d17085-97aa-4e26-980d-269666b50118",
+                            Email = "user@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@GMAIL.COM",
+                            NormalizedUserName = "USER@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEONzLFgTjc6OvVRJavwaQdjxr8IcE59ExC48idoDRORiFMeb88Wl8OfYQWPofwyprg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "6aebe525-73f9-405b-bf2b-a5b00cc61428",
+                            TwoFactorEnabled = false,
+                            UserName = "user@gmail.com"
                         });
                 });
 
@@ -244,6 +260,11 @@ namespace Blog_Backend.Migrations.AuthData
                         {
                             UserId = "3dd3fa83-5ea9-4fbf-b6a1-a312dfe22ba6",
                             RoleId = "30082515-155d-4b8b-b7c8-bbbddf835818"
+                        },
+                        new
+                        {
+                            UserId = "667c747c-4e56-4e1b-af94-f498f24de516",
+                            RoleId = "7327ae3c-52c5-455a-b8c6-c206d1f776dc"
                         });
                 });
 

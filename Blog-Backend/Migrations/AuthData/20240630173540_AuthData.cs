@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Blog_Backend.Migrations.AuthData
 {
     /// <inheritdoc />
-    public partial class InitialMigrationForAuth : Migration
+    public partial class AuthData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -170,7 +170,11 @@ namespace Blog_Backend.Migrations.AuthData
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3dd3fa83-5ea9-4fbf-b6a1-a312dfe22ba6", 0, "21b1d7d9-5fd9-4226-98d7-7d4ad41948e1", "admin", false, false, null, "ADMIN", "ADMIN", "AQAAAAIAAYagAAAAEFdyU24wc7pabjY+LmBcGjpAEH0h98tNKiBri6uw7Wqk2HeUX59igDuiTnRdylK/TA==", null, false, "6d8cbbad-158d-4bba-9ed2-78c8e1c9d70d", false, "admin" });
+                values: new object[,]
+                {
+                    { "3dd3fa83-5ea9-4fbf-b6a1-a312dfe22ba6", 0, "c8fb8b29-0b25-4011-bb40-f9ec0dae4019", "admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEDCImlvRHwsoygzrLdb0ttpkOIEPbZkuMNAHTVFzQorUqF1wAE/VEOslM0IOZkkPlw==", null, false, "a5fe033a-165f-4da3-9a9b-d8f44274dc37", false, "admin@gmail.com" },
+                    { "667c747c-4e56-4e1b-af94-f498f24de516", 0, "d3d17085-97aa-4e26-980d-269666b50118", "user@gmail.com", false, false, null, "USER@GMAIL.COM", "USER@GMAIL.COM", "AQAAAAIAAYagAAAAEONzLFgTjc6OvVRJavwaQdjxr8IcE59ExC48idoDRORiFMeb88Wl8OfYQWPofwyprg==", null, false, "6aebe525-73f9-405b-bf2b-a5b00cc61428", false, "user@gmail.com" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -178,7 +182,8 @@ namespace Blog_Backend.Migrations.AuthData
                 values: new object[,]
                 {
                     { "30082515-155d-4b8b-b7c8-bbbddf835818", "3dd3fa83-5ea9-4fbf-b6a1-a312dfe22ba6" },
-                    { "7327ae3c-52c5-455a-b8c6-c206d1f776dc", "3dd3fa83-5ea9-4fbf-b6a1-a312dfe22ba6" }
+                    { "7327ae3c-52c5-455a-b8c6-c206d1f776dc", "3dd3fa83-5ea9-4fbf-b6a1-a312dfe22ba6" },
+                    { "7327ae3c-52c5-455a-b8c6-c206d1f776dc", "667c747c-4e56-4e1b-af94-f498f24de516" }
                 });
 
             migrationBuilder.CreateIndex(
