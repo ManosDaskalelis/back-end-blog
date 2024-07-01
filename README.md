@@ -23,3 +23,9 @@ user { username: User@gmail.com
         password: user@123
         }        
         
+
+# To run
+
+1. Open NuGet terminal and type ```Update-Database -Context "DataContext" ```
+
+2. ```Update-Database -Context "AuthDataContext" ```
